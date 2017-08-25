@@ -52,10 +52,10 @@ export class SubmitForm extends React.Component {
   getFormElement(name) {
     return this.state.data[name];
   }
-  getFormElementValidity() {
+  getFormElementValidity(name) {
     return this.state.validity[name];
   }
-  getFormElementErrorText() {
+  getFormElementErrorText(name) {
     return this.state.errors[name];
   }
 

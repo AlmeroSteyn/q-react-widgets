@@ -15,7 +15,7 @@ const ValidationError = ({ uniqueA11yId, errorText, isWide, forceWrap }) => {
 
   return (
     <div className={errorClass}>
-      <span id={uniqueA11yId}>
+      <span className="pull-left" id={uniqueA11yId}>
         {errorText}
       </span>
     </div>

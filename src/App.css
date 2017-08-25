@@ -22,3 +22,10 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.kno-validation {
+  color: red;
+  font-weight: 500;
+  margin-top: 5px;
+  font-size: 15px;
+}

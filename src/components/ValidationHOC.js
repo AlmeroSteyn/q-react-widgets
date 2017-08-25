@@ -76,7 +76,10 @@ export const InnerValidationHOC = InnerComponent =>
     }
 
     render() {
-      return <InnerComponent {...this.props} onChangeHandler={this.onChangeHandler} />;
+      const { name } = this.props;
+      const elementValue = this.context.getFormElement(name);
+      const errorText = this.context.getFormElementErrorText(name);
+      return <InnerComponent elementValue={elementValue} errorText={errorText} {...this.props} onChangeHandler={this.onChangeHandler} />;
     }
   };
 
