@@ -29,17 +29,17 @@ export const InnerValidationHOC = InnerComponent =>
       this.context.setFormElementValidity(name, errorObj.isValid, errorObj.errorText);
     }
 
-    componentDidUpdate(prevProps) {
-      const { name, forceValidateAlways } = this.props;
-      const elementValue = this.context.getFormElement(name);
-      if (!forceValidateAlways && prevProps.elementValue === elementValue) {
-        return;
-      }
-      const errorObj = this.runValidation(elementValue);
-      if (prevProps.errorText !== errorObj.errorText || prevProps.isValid !== errorObj.isValid) {
-        this.context.setFormElementValidity(name, errorObj.isValid, errorObj.errorText);
-      }
-    }
+    // componentDidUpdate(prevProps) {
+    //   const { name, forceValidateAlways } = this.props;
+    //   const elementValue = this.context.getFormElement(name);
+    //   if (!forceValidateAlways && prevProps.elementValue === elementValue) {
+    //     return;
+    //   }
+    //   const errorObj = this.runValidation(elementValue);
+    //   if (prevProps.errorText !== errorObj.errorText || prevProps.isValid !== errorObj.isValid) {
+    //     this.context.setFormElementValidity(name, errorObj.isValid, errorObj.errorText);
+    //   }
+    // }
 
     componentWillUnmount() {
       const { name, isValidWhenUnmounted } = this.props;
@@ -52,9 +52,13 @@ export const InnerValidationHOC = InnerComponent =>
     onChangeHandler(e) {
       const { name, onChange } = this.props;
       this.context.updateFormElement(name, e.target.value);
+      const elementValue = this.context.getFormElement(name);
+      const errorObj = this.runValidation(elementValue);
+      this.context.setFormElementValidity(name, errorObj.isValid, errorObj.errorText);
       if (onChange) {
         onChange(e.target.value);
       }
+      this.forceUpdate();
     }
 
     runValidation(textValue) {

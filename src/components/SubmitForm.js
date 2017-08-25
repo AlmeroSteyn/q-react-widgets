@@ -41,18 +41,44 @@ export class SubmitForm extends React.Component {
   }
 
   initializeFormElement(name, value) {
-    this.setState({
-      [name]: value
-    });
+    this.updateElement(name, value);
   }
   updateFormElement(name, value) {
-    console.log(name);
-    console.log(value);
+    this.updateElement(name, value);
   }
-  setFormElementValidity() {}
-  getFormElement() {}
-  getFormElementValidity() {}
-  getFormElementErrorText() {}
+  setFormElementValidity(name, validity, error) {
+    this.updateElementValidityAndError(name, validity, error);
+  }
+  getFormElement(name) {
+    return this.state.data[name];
+  }
+  getFormElementValidity() {
+    return this.state.validity[name];
+  }
+  getFormElementErrorText() {
+    return this.state.errors[name];
+  }
+
+  updateElement(name, value){
+    this.setState({
+      data: Object.assign(this.state.data,{
+        [name]: value
+      })
+    })
+  }
+
+  updateElementValidityAndError(name, validity, error){
+    console.log(error);
+    this.setState({
+      validity: Object.assign(this.state.validity,{
+        [name]: validity
+      }),
+      errors: Object.assign(this.state.errors,{
+        [name]: error
+      })
+    })
+  }
+
 
   // componentWillMount() {
   //   const { clearFormSubmit, formName } = this.props;
@@ -68,7 +94,7 @@ export class SubmitForm extends React.Component {
     const { startFormSubmit, formName, onSubmit } = this.props;
     // startFormSubmit(formName);
 
-    onSubmit(e);
+    onSubmit(this.state);
   }
 
   render() {
@@ -86,6 +112,7 @@ export class SubmitForm extends React.Component {
       ariaSaveText
     } = this.props;
     // const { uniqueA11yId } = this.state;
+
     return (
       <form name={formName} className="form-horizontal" onSubmit={this.submitHandler} noValidate="noValidate">
         {children}
